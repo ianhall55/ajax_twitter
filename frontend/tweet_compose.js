@@ -24,6 +24,8 @@ class TweetCompose {
       e.preventDefault();
       this.addMentionedUser(e);
     });
+
+
   }
 
   addMentionedUser(e) {
@@ -31,11 +33,22 @@ class TweetCompose {
     let $select = $script.html();
 
     this.el.find(".mentioned").append($select);
+    $(".remove-mentioned-user").on("click", ev => {
+
+      e.preventDefault();
+      this.removeMentionedUser(ev.currentTarget);
+    });
+  }
+
+  removeMentionedUser(target) {
+
+    $(target).parent().remove();
   }
 
   clearInput() {
     $("textarea").val("");
     $("select").val("");
+    $(".mentioned").empty();
   }
 
   handleSuccess(tweet) {

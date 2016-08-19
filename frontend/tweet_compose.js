@@ -20,9 +20,14 @@ class TweetCompose {
       }
     });
 
-    $(".add-mentioned-user").on("click", e => {
+    $(".mentioned").on("click", "a.add-mentioned-user", e => {
       e.preventDefault();
       this.addMentionedUser(e);
+    });
+
+    $(".mentioned").on("click", "a.remove-mentioned-user", e => {
+      e.preventDefault();
+      this.removeMentionedUser(e.currentTarget);
     });
 
 
@@ -33,11 +38,7 @@ class TweetCompose {
     let $select = $script.html();
 
     this.el.find(".mentioned").append($select);
-    $(".remove-mentioned-user").on("click", ev => {
 
-      e.preventDefault();
-      this.removeMentionedUser(ev.currentTarget);
-    });
   }
 
   removeMentionedUser(target) {
@@ -58,10 +59,12 @@ class TweetCompose {
 
 
     let $li = $(`<li>${tweet.content} -- <a href="/users/${tweet.user.id}">${tweet.user.username}</a> -- ${tweet.created_at}</li>`);
+    let $ul = $(`<ul>`);
     tweet.mentions.forEach(function(el) {
       let $child = $(`<li><a href="/users/${el.user.id}">${el.user.username}</a></li>`);
-      $li.append($child);
+      $ul.append($child);
     });
+    $li.append($ul);
     $feed.prepend($li);
   }
 
